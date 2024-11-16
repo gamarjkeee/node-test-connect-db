@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="/javascripts/RequestManager.js"></script>
+    <link rel="stylesheet" href="/stylesheets/main.css" />
+  </head>
+  <body>
+    <%- include('sections/header', { title: 'User List' }) %>
+    <hr />
+    <form action="/users" method="get">
+      <input type="text" name="name" placeholder="Name" />
+      <input type="number" name="age" placeholder="age" />
+      <button type="submit">Filter</button>
+      <a href="/users"><button>Clear filters</button></a>
+    </form>
+    <hr />
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>age</th>
+          <th>Email</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% users.forEach(user => { %>
+        <tr>
+          <td><%= user.name %></td>
+          <td><%= user.age %></td>
+          <td><%= user.email %></td>
+          <td>
+            <a href="/users/register/<%= user.id %>">Edit</a>
+            <button
+              onclick="RequestManager.deleteRequest('/users', '<%= user.id %>' )">
+              Delete
+            </button>
+          </td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+    <hr />
+    <a href="/users/register">Додати користувача</a>
+  </body>
+</html>
